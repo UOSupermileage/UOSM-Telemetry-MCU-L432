@@ -7,6 +7,7 @@
 
 #include "CANMessageLookUpModule.h"
 #include "SerialDebugDriver.h"
+#include "LoggerModule.h"
 
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 
@@ -33,6 +34,7 @@ const ICommsMessageInfo CANMessageLookUpTable[NUMBER_CAN_MESSAGE_IDS] =
 void ThrottleDataCallback(iCommsMessage_t msg)
 {
 	DebugPrint("ThrottleDataCallback! %d", msg.standardMessageID);
+	LoggerEnqueue(&msg);
 }
 void SpeedDataCallback(iCommsMessage_t msg)
 {

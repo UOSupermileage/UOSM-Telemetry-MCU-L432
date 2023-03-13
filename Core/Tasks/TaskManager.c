@@ -8,10 +8,9 @@
  */
 #include "TaskManager.h"
 
-#include "SDCardDriver.h"
+#include "LoggerTask.h"
 
 void RunTaskManager( void )
 {
-	SDInit();
-	SDAppend("TestFile.csv", "");
+	InitLoggerTask();
 }
