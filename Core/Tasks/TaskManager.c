@@ -9,8 +9,12 @@
 #include "TaskManager.h"
 
 #include "LoggerTask.h"
+#include "InternalCommsTask.h"
+
+#include "SDCardDriver.h"
 
 void RunTaskManager( void )
 {
+	InitInternalCommsTask();
 	InitLoggerTask();
 }

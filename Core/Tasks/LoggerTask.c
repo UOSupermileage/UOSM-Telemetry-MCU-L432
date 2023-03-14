@@ -16,7 +16,7 @@
 
 #define STACK_SIZE 128*8
 #define LOGGER_TASK_PRIORITY (osPriority_t) osPriorityRealtime
-#define TIMER_LOGGER_TASK 50UL
+#define TIMER_LOGGER_TASK 100UL
 
 const char TAG[] = "#LGT:";
 
@@ -43,20 +43,30 @@ PRIVATE void LoggerTask(void *argument)
 
 	LoggerInit();
 
-	const char* filename = "logs.csv";
+	const char* filename = "canLogs.csv";
 
 	iCommsMessage_t msg;
 
+	cycleTick += 1000;
+	osDelayUntil(cycleTick);
+
+
 	SDInit();
-	SDAppend(filename, "head");
+
+	DebugPrint("Logging: ID,Length,Data");
+	SDAppend(filename, "ID,Length,Data\r\n");
+	DebugPrint("Done append");
 
 	for(;;)
 	{
 		cycleTick += TIMER_LOGGER_TASK;
 		osDelayUntil(cycleTick);
 
-		if (LoggerDequeue(&msg) == RESULT_OK) {
-			SDAppend(filename, "hi");
-		}
+//		if (LoggerDequeue(&msg) == RESULT_OK) {
+//			DebugPrint("Logging: %d,%d,%x", msg.standardMessageID, msg.dataLength, msg.data);
+//			SDAppend(filename, "%d,%d,%x/r/n", msg.standardMessageID, msg.dataLength, msg.data);
+//		} else {
+			DebugPrint("Nothing to write...");
+//		}
 	}
 }

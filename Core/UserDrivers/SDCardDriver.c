@@ -14,9 +14,13 @@
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 static const char TAG[] = "#SCD";
 
+static char lineBuffer[MAX_LINE_LENGTH];
+
+
+const char* hi = "hi";
+
 PUBLIC result_t SDInit() {
 	DebugPrint("%s Init SD Card Driver", TAG);
-	HAL_Delay(1000); // Wait for SD card to power on
 
 	FATFS fs;
 	FRESULT res;
@@ -47,7 +51,7 @@ PUBLIC result_t SDInit() {
 	DebugPrint("%s SD card stats:\r\n%10lu KiB total drive space.\r\n%10lu KiB available.\r\n", TAG, total_sectors / 2, free_sectors / 2);
 
 	// Demount the drive
-	res = f_mount(NULL, "", 0);
+	res = f_mount(NULL, "", 1);
 	if (res != FR_OK) {
 		DebugPrint("%s Failed to unmount drive", TAG);
 		return RESULT_FAIL;
@@ -56,17 +60,30 @@ PUBLIC result_t SDInit() {
 	return RESULT_OK;
 }
 
-PUBLIC result_t SDAppend(const char* filename, const char* line) {
+PUBLIC result_t SDAppend(const char* filename, const char* line, ...) {
+
+//	va_list args;
+//	va_start(args, line);
+//	length_t len = vsprintf(lineBuffer, line, args);
+//	va_end(args);
+
+	DebugPrint("%s Starting SDAppend", TAG);
+
 	FATFS fs;
 	FIL file;
 	FRESULT res;
 
+	DebugPrint("%s Created variables", TAG);
+
+
 	// Mount the file system
-	res = f_mount(&fs, "", 1);
+	res = f_mount(&fs, "/", 1);
 
 	if (res != FR_OK) {
 		DebugPrint("%s Failed to  mount file system: %d", TAG, res);
 		return RESULT_FAIL;
+	} else {
+		DebugPrint("%s Mounted file system: %d", TAG, res);
 	}
 
 	res = f_open(&file, filename, FA_OPEN_APPEND | FA_WRITE);
@@ -74,28 +91,28 @@ PUBLIC result_t SDAppend(const char* filename, const char* line) {
 	if (res != FR_OK) {
 		DebugPrint("%s Failed to write to %s", TAG, filename);
 		return RESULT_FAIL;
+	} else {
+		DebugPrint("%s Opened %s", TAG, filename);
 	}
 
-	f_puts("X,Y,Z\r\n", &file);
-
-	f_printf(&file, "%d,%d,%d,\r,\n", 0,0,0);
-
-	f_printf(&file, "%d,%d,%d,\r,\n", 2,0,0);
-
-	f_printf(&file, "%d,%d,%d,\r,\n", 0,4,0);
+	f_puts(hi, &file);
 
 	res = f_close(&file);
 
 	if (res != FR_OK) {
 		DebugPrint("%s Failed to close %s", TAG, filename);
 		return RESULT_FAIL;
+	} else {
+		DebugPrint("%s Closed %s", TAG, filename);
 	}
 
 	// Demount the drive
-	res = f_mount(NULL, "", 0);
+	res = f_mount(NULL, "/", 0);
 	if (res != FR_OK) {
 		DebugPrint("%s Failed to unmount drive", TAG);
 		return RESULT_FAIL;
+	} else {
+		DebugPrint("%s Unmounted drive", TAG);
 	}
 
 

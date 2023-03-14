@@ -14,8 +14,10 @@
 
 #include "ApplicationTypes.h"
 
+#define MAX_LINE_LENGTH 256
+
 PUBLIC result_t SDInit();
 
-PUBLIC result_t SDAppend(const char* filename, const char* line);
+PUBLIC result_t SDAppend(const char* filename, const char* line, ...);
 
 #endif /* USERDRIVERS_SDCARDDRIVER_H_ */

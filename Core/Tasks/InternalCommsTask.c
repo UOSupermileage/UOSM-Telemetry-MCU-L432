@@ -16,11 +16,9 @@
 // Function alias - replace with the driver api
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 
-#define STACK_SIZE 128*8
-#define INTERNAL_COMMS_TASK_PRIORITY (osPriority_t) osPriorityRealtime
+#define ICOMMS_STACK_SIZE 128*8
+#define INTERNAL_COMMS_TASK_PRIORITY (osPriority_t) osPriorityRealtime1
 #define TIMER_INTERNAL_COMMS_TASK 50UL
-
-#define THROTTLE_RATE 4
 
 const char ICT_TAG[] = "#ICT:";
 
@@ -30,7 +28,7 @@ PRIVATE void InternalCommsTask(void *argument);
 osThreadId_t InternalCommsTaskHandle;
 const osThreadAttr_t InternalCommsTask_attributes = {
 	.name = "InternalCommunications",
-	.stack_size = STACK_SIZE,
+	.stack_size = ICOMMS_STACK_SIZE,
 	.priority = INTERNAL_COMMS_TASK_PRIORITY,
 };
 
@@ -50,6 +48,8 @@ PRIVATE void InternalCommsTask(void *argument)
 	{
 		cycleTick += TIMER_INTERNAL_COMMS_TASK;
 		osDelayUntil(cycleTick);
+
+		DebugPrint("Checking iComms");
 
 		IComms_Update();
 		uint16_t lookupTableIndex = 0;

@@ -1,3 +1,7 @@
+# SD Card Selection
+
+STM32's FatFS implentation only supports SD Cards with a sector size of 512. You'll need to format the sd card in either Linux or Windows.
+
 # FreeRTOS
 
 ## FreeRTOS Heap
