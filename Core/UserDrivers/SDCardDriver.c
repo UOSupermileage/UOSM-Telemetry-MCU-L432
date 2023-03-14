@@ -48,13 +48,13 @@ PUBLIC result_t SDInit() {
 
 	DebugPrint("%s SD card stats:\r\n%10lu KiB total drive space.\r\n%10lu KiB available.\r\n", TAG, total_sectors / 2, free_sectors / 2);
 
-	res = f_mount(NULL, "/", 0);
-	if (res != FR_OK) {
-		DebugPrint("%s Failed to unmount drive", TAG);
-		return RESULT_FAIL;
-	} else {
-		DebugPrint("%s Unmounted drive", TAG);
-	}
+//	res = f_mount(NULL, "/", 0);
+//	if (res != FR_OK) {
+//		DebugPrint("%s Failed to unmount drive", TAG);
+//		return RESULT_FAIL;
+//	} else {
+//		DebugPrint("%s Unmounted drive", TAG);
+//	}
 
 	return RESULT_OK;
 }
@@ -64,12 +64,12 @@ PUBLIC result_t SDAppend(const char* filename, const char* line, ...) {
 	FIL file;
 	FRESULT res;
 
-	res = f_mount(&fs, "", 1);
-
-	if (res != FR_OK) {
-		DebugPrint("%s Failed to mount file system: %i", TAG, res);
-		return RESULT_FAIL;
-	}
+//	res = f_mount(&fs, "", 1);
+//
+//	if (res != FR_OK) {
+//		DebugPrint("%s Failed to mount file system: %i", TAG, res);
+//		return RESULT_FAIL;
+//	}
 
 	va_list args;
 	va_start(args, line);
@@ -102,13 +102,13 @@ PUBLIC result_t SDAppend(const char* filename, const char* line, ...) {
 		DebugPrint("%s Closed %s", TAG, filename);
 	}
 
-	res = f_mount(NULL, "/", 0);
-	if (res != FR_OK) {
-		DebugPrint("%s Failed to unmount drive", TAG);
-		return RESULT_FAIL;
-	} else {
-		DebugPrint("%s Unmounted drive", TAG);
-	}
+//	res = f_mount(NULL, "/", 0);
+//	if (res != FR_OK) {
+//		DebugPrint("%s Failed to unmount drive", TAG);
+//		return RESULT_FAIL;
+//	} else {
+//		DebugPrint("%s Unmounted drive", TAG);
+//	}
 
 	return RESULT_OK;
 }

@@ -55,6 +55,9 @@ PRIVATE void InternalCommsTask(void *argument)
 		uint16_t lookupTableIndex = 0;
 		while(IComms_HasRxMessage())
 		{
+
+			DebugPrint("Received message!");
+
 			iCommsMessage_t rxMsg;
 			result_t ret = IComms_ReceiveNextMessage(&rxMsg);
 			if(ret == RESULT_FAIL)

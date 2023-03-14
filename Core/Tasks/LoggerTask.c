@@ -63,12 +63,12 @@ PRIVATE void LoggerTask(void *argument)
 		cycleTick += TIMER_LOGGER_TASK;
 		osDelayUntil(cycleTick);
 //
-//		if (LoggerDequeue(&msg) == RESULT_OK) {
-//			DebugPrint("Logging: %d,%d,%x", msg.standardMessageID, msg.dataLength, msg.data);
-//			SDAppend(filename, "%d,%d,%x/r/n", msg.standardMessageID, msg.dataLength, msg.data);
-//		} else {
+		if (LoggerDequeue(&msg) == RESULT_OK) {
+			DebugPrint("Logging: %d,%d,%x", msg.standardMessageID, msg.dataLength, msg.data);
+			SDAppend(filename, "%d,%d,%x/r/n", msg.standardMessageID, msg.dataLength, msg.data);
+		} else {
 			DebugPrint("Nothing to write...");
-//		}
+		}
 	}
 
 	// Demount the drive
