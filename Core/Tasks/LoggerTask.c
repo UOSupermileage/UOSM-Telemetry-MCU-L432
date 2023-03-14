@@ -16,7 +16,7 @@
 
 #define STACK_SIZE 128*8
 #define LOGGER_TASK_PRIORITY (osPriority_t) osPriorityRealtime
-#define TIMER_LOGGER_TASK 100UL
+#define TIMER_LOGGER_TASK 1000UL
 
 const char TAG[] = "#LGT:";
 
@@ -54,14 +54,15 @@ PRIVATE void LoggerTask(void *argument)
 	SDInit();
 
 	DebugPrint("Logging: ID,Length,Data");
-	SDAppend(filename, "ID,Length,Data\r\n");
+	const char* l = "ID,Length,Data\r\n";
+	SDAppend(filename, l);
 	DebugPrint("Done append");
 
 	for(;;)
 	{
 		cycleTick += TIMER_LOGGER_TASK;
 		osDelayUntil(cycleTick);
-
+//
 //		if (LoggerDequeue(&msg) == RESULT_OK) {
 //			DebugPrint("Logging: %d,%d,%x", msg.standardMessageID, msg.dataLength, msg.data);
 //			SDAppend(filename, "%d,%d,%x/r/n", msg.standardMessageID, msg.dataLength, msg.data);
@@ -69,4 +70,14 @@ PRIVATE void LoggerTask(void *argument)
 			DebugPrint("Nothing to write...");
 //		}
 	}
+
+	// Demount the drive
+//	res = f_mount(NULL, "/", 0);
+//	if (res != FR_OK) {
+//		DebugPrint("%s Failed to unmount drive", TAG);
+//		return RESULT_FAIL;
+//	} else {
+//		DebugPrint("%s Unmounted drive", TAG);
+//	}
+
 }
