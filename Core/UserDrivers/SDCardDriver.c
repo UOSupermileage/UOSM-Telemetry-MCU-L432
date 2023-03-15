@@ -18,7 +18,7 @@ static const char TAG[] = "#SCD";
 static char lineBuffer[MAX_LINE_LENGTH];
 
 static volatile FATFS fs;
-static char _filename[32];
+static char _filename[32] = "log.csv";
 
 PUBLIC result_t SDInit() {
 	DebugPrint("%s Init SD Card Driver", TAG);
@@ -54,29 +54,29 @@ PUBLIC result_t SDInit() {
 }
 
 PUBLIC const char* SDGetFreeFilename() {
-	DIR dir;
-	f_opendir(&dir, "/");
-
-	FILINFO fno;
-
-	int32_t largest_num = 0;
-	// Iterate through the files in the directory
-	while (f_readdir(&dir, &fno) == FR_OK && fno.fname[0] != '\0') {
-	    // Parse the filename to extract the number
-	    int num = atoi(fno.fname + strlen("log"));
-
-	    // Update the largest number seen so far
-	    if (num > largest_num) {
-	        largest_num = num;
-	    }
-	}
-
-	f_closedir(&dir);
-
-	// Save filename of next file
-	sprintf(_filename, "log%ld.csv", largest_num + 1);
-
-	DebugPrint("Logs will be written to: %s", _filename);
+//	DIR dir;
+//	f_opendir(&dir, "/");
+//
+//	FILINFO fno;
+//
+//	int32_t largest_num = 0;
+//	// Iterate through the files in the directory
+//	while (f_readdir(&dir, &fno) == FR_OK && fno.fname[0] != '\0') {
+//	    // Parse the filename to extract the number
+//	    int num = atoi(fno.fname + strlen("log"));
+//
+//	    // Update the largest number seen so far
+//	    if (num > largest_num) {
+//	        largest_num = num;
+//	    }
+//	}
+//
+//	f_closedir(&dir);
+//
+//	// Save filename of next file
+//	sprintf(_filename, "log%ld.csv", largest_num + 1);
+//
+//	DebugPrint("Logs will be written to: %s", _filename);
 
 	return _filename;
 }
@@ -97,7 +97,7 @@ PUBLIC result_t SDAppend(const char* filename, const char* line, ...) {
 
 	res = f_open(&file, filename, FA_OPEN_APPEND | FA_WRITE);
 
-	DebugPrint("%s Oppened %s", TAG, filename);
+	DebugPrint("%s Opened %s", TAG, filename);
 
 	if (res != FR_OK) {
 		DebugPrint("%s Failed to write to %s", TAG, filename);
