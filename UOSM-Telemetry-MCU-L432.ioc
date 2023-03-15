@@ -2,8 +2,9 @@
 CAD.formats=
 CAD.pinconfig=
 CAD.provider=
-FATFS.IPParameters=_MAX_SS
+FATFS.IPParameters=_MAX_SS,_USE_LFN
 FATFS._MAX_SS=512
+FATFS._USE_LFN=0
 FREERTOS.IPParameters=Tasks01,configUSE_NEWLIB_REENTRANT,configTOTAL_HEAP_SIZE
 FREERTOS.Tasks01=defaultTask,24,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL
 FREERTOS.configTOTAL_HEAP_SIZE=30000

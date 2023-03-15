@@ -30,6 +30,17 @@ const osThreadAttr_t LoggerTask_attributes = {
 	.priority = LOGGER_TASK_PRIORITY,
 };
 
+PUBLIC uint32_t readMsg(iCommsMessage_t *msg) {
+	int32_t value = msg->data[msg->dataLength - 1];
+
+	for (int i = msg->dataLength - 1; i > 0; i--) {
+		value <<= 8;
+		value |= msg->data[i -1];
+	}
+
+	return value;
+}
+
 PUBLIC void InitLoggerTask(void)
 {
 
@@ -43,8 +54,6 @@ PRIVATE void LoggerTask(void *argument)
 
 	LoggerInit();
 
-	const char* filename = "canLogs.csv";
-
 	iCommsMessage_t msg;
 
 	cycleTick += 1000;
@@ -53,9 +62,10 @@ PRIVATE void LoggerTask(void *argument)
 
 	SDInit();
 
+	const char* filename = SDGetFreeFilename();
+
 	DebugPrint("Logging: ID,Length,Data");
-	const char* l = "ID,Length,Data\r\n";
-	SDAppend(filename, l);
+	SDAppend(filename, "ID,Data");
 	DebugPrint("Done append");
 
 	for(;;)
@@ -64,8 +74,9 @@ PRIVATE void LoggerTask(void *argument)
 		osDelayUntil(cycleTick);
 //
 		if (LoggerDequeue(&msg) == RESULT_OK) {
-			DebugPrint("Logging: %d,%d,%x", msg.standardMessageID, msg.dataLength, msg.data);
-			SDAppend(filename, "%d,%d,%x/r/n", msg.standardMessageID, msg.dataLength, msg.data);
+			uint32_t d = readMsg(&msg);
+			DebugPrint("%d,%d", msg.standardMessageID, d);
+			SDAppend(filename, "%d,%d", msg.standardMessageID, d);
 		} else {
 			DebugPrint("Nothing to write...");
 		}

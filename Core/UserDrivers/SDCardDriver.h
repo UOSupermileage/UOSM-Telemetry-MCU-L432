@@ -18,6 +18,8 @@
 
 PUBLIC result_t SDInit();
 
+PUBLIC const char* SDGetFreeFilename();
+
 PUBLIC result_t SDAppend(const char* filename, const char* line, ...);
 
 #endif /* USERDRIVERS_SDCARDDRIVER_H_ */
