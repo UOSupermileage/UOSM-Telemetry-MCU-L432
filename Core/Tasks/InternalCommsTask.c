@@ -9,8 +9,6 @@
 //#include "CANMessageLookUpModule.h"
 #include "InternalCommsTask.h"
 #include "InternalCommsModule.h"
-#include "CANMessageLookUpModule.h"
-#include "DataAggregation.h"
 #include "SerialDebugDriver.h"
 
 // Function alias - replace with the driver api
@@ -49,41 +47,6 @@ PRIVATE void InternalCommsTask(void *argument)
 		cycleTick += TIMER_INTERNAL_COMMS_TASK;
 		osDelayUntil(cycleTick);
 
-		DebugPrint("Checking iComms");
-
-		IComms_Update();
-		uint16_t lookupTableIndex = 0;
-		while(IComms_HasRxMessage())
-		{
-
-			DebugPrint("Received message!");
-
-			iCommsMessage_t rxMsg;
-			result_t ret = IComms_ReceiveNextMessage(&rxMsg);
-			if(ret == RESULT_FAIL)
-			{
-				DebugPrint("%s Error Retrieving next message", ICT_TAG);
-			}
-			else{
-				DebugPrint("%s Standard ID: %d", rxMsg.standardMessageID, ICT_TAG);
-				DebugPrint("%s: DLC: %d", rxMsg.dataLength, ICT_TAG);
-				for(uint8_t i=0; i<rxMsg.dataLength; i++) DebugPrint("%s Data[%d]: %d", ICT_TAG, i, rxMsg.data[i]);
-
-				// NOTE: with the current polling, new messages incoming while processing this batch of messages will not be processed until the next cycle.
-				// lookup can message in table
-				// Exit if message found or if end of table reached
-				while(rxMsg.standardMessageID != CANMessageLookUpTable[lookupTableIndex].messageID && lookupTableIndex < NUMBER_CAN_MESSAGE_IDS)
-				{
-					lookupTableIndex++;
-
-				}
-				// handle the case where the message is no recognized by the look up table
-				if(lookupTableIndex < NUMBER_CAN_MESSAGE_IDS)
-				{
-					CANMessageLookUpTable[lookupTableIndex].canMessageCallback(rxMsg);
-				}
-			}
-
-		}
+		IComms_PeriodicReceive();
 	}
 }

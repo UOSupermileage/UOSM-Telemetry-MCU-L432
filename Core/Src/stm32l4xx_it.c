@@ -164,13 +164,6 @@ void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
-	FatFsCnt++;
-	if(FatFsCnt >= 10)
-	{
-		FatFsCnt = 0;
-	    SDTimer_Handler();
-	}
-
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
 #if (INCLUDE_xTaskGetSchedulerState == 1 )

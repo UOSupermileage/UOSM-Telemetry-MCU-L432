@@ -8,13 +8,14 @@
  */
 #include "TaskManager.h"
 
+#include "DataAggregation.h"
+
 #include "LoggerTask.h"
 #include "InternalCommsTask.h"
 
-#include "SDCardDriver.h"
-
 void RunTaskManager( void )
 {
+	InitDataAggregator();
 	InitInternalCommsTask();
 	InitLoggerTask();
 }
