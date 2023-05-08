@@ -44,6 +44,7 @@ PRIVATE void LoggerTask(void *argument)
 	DebugPrint("logger");
 
 	RTC_TimeTypeDef sTime = {0};
+	RTC_DateTypeDef sDate = {0};
 
 	SerialLogln("timestamp,throttle,speed,current,voltage,throttleTooHigh,motorInitializing,clockState,lastDeadman");
 
@@ -53,6 +54,7 @@ PRIVATE void LoggerTask(void *argument)
 		osDelayUntil(cycleTick);
 
 		HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+		HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
 
 		SerialLogln("%02d.%02d.%02d,%d,%d,%d,%d,%d,%d,%d,%02d.%02d.%02d", sTime.Hours, sTime.Minutes ,sTime.Seconds, SystemGetThrottle(), SystemGetSpeed(), SystemGetCurrent(), 0, SystemGetThrottleTooHigh(), SystemGetMotorInitializing(), SystemGetClockState(), SystemGetDeadmanTimestampHours(), SystemGetDeadmanTimestampMinutes(), SystemGetDeadmanTimestampSeconds());
 	}
