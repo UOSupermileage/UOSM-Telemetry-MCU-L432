@@ -46,7 +46,7 @@ PRIVATE void LoggerTask(void *argument)
 	RTC_TimeTypeDef sTime = {0};
 	RTC_DateTypeDef sDate = {0};
 
-	SerialLogln("timestamp,throttle,speed,current,voltage,throttleTooHigh,motorInitializing,clockState,lastDeadman");
+//	SerialLogln("timestamp,throttle,speed,current,voltage,throttleTooHigh,motorInitializing,clockState,lastDeadman");
 
 	for(;;)
 	{
