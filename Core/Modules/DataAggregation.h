@@ -48,6 +48,8 @@ PUBLIC uint8_t SystemGetDeadmanTimestampSeconds();
 PUBLIC void SystemSetMotorRPM(int32_t rpm);
 PUBLIC int32_t SystemGetMotorRPM();
 
+PUBLIC void SystemSetBatteryVoltage(voltage_t voltage);
+PUBLIC voltage_t SystemGetBatteryVoltage();
 
 
 #endif /* MODULES_DATAAGGREGATION_H_ */

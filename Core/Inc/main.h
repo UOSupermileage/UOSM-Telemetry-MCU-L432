@@ -57,6 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define Battery_Voltage_Pin GPIO_PIN_0
+#define Battery_Voltage_GPIO_Port GPIOA
+#define Battery_Current_Pin GPIO_PIN_3
+#define Battery_Current_GPIO_Port GPIOA
 #define CAN_CS_Pin GPIO_PIN_0
 #define CAN_CS_GPIO_Port GPIOB
 

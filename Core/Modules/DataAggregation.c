@@ -12,6 +12,7 @@ percentage_t throttle;
 speed_t speed;
 current_t current;
 int32_t rpm;
+voltage_t voltage;
 
 telemetry_status_t status;
 RTC_TimeTypeDef deadmanTimestamp;
@@ -80,4 +81,11 @@ PUBLIC void SystemSetMotorRPM(int32_t r) {
 }
 PUBLIC int32_t SystemGetMotorRPM() {
 	return rpm;
+}
+
+PUBLIC void SystemSetBatteryVoltage(voltage_t v) {
+	voltage = v;
+}
+PUBLIC voltage_t SystemGetBatteryVoltage() {
+	return voltage;
 }

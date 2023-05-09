@@ -58,7 +58,7 @@ PRIVATE void LoggerTask(void *argument)
 		// Required for the time to be unlocked and continue incrementing
 		HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
 
-		SerialLogln("%02d.%02d.%02d,%d,%d,%d,%d,%d,%d,%d,%d,%02d.%02d.%02d", sTime.Hours, sTime.Minutes ,sTime.Seconds, SystemGetThrottle(), SystemGetSpeed(), SystemGetMotorRPM(), SystemGetCurrent(), 0, SystemGetThrottleTooHigh(), SystemGetMotorInitializing(), SystemGetClockState(), SystemGetDeadmanTimestampHours(), SystemGetDeadmanTimestampMinutes(), SystemGetDeadmanTimestampSeconds());
+		SerialLogln("%02d.%02d.%02d,%d,%d,%d,%d,%d,%d,%d,%d,%02d.%02d.%02d", sTime.Hours, sTime.Minutes ,sTime.Seconds, SystemGetThrottle(), SystemGetSpeed(), SystemGetMotorRPM(), SystemGetCurrent(), SystemGetBatteryVoltage(), SystemGetThrottleTooHigh(), SystemGetMotorInitializing(), SystemGetClockState(), SystemGetDeadmanTimestampHours(), SystemGetDeadmanTimestampMinutes(), SystemGetDeadmanTimestampSeconds());
 	}
 
 }
