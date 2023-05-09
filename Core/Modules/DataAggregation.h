@@ -45,6 +45,9 @@ PUBLIC uint8_t SystemGetDeadmanTimestampHours();
 PUBLIC uint8_t SystemGetDeadmanTimestampMinutes();
 PUBLIC uint8_t SystemGetDeadmanTimestampSeconds();
 
+PUBLIC void SystemSetMotorRPM(int32_t rpm);
+PUBLIC int32_t SystemGetMotorRPM();
+
 
 
 #endif /* MODULES_DATAAGGREGATION_H_ */

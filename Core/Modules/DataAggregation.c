@@ -11,6 +11,7 @@ extern RTC_HandleTypeDef hrtc;
 percentage_t throttle;
 speed_t speed;
 current_t current;
+int32_t rpm;
 
 telemetry_status_t status;
 RTC_TimeTypeDef deadmanTimestamp;
@@ -72,4 +73,11 @@ PUBLIC uint8_t SystemGetDeadmanTimestampMinutes() {
 }
 PUBLIC uint8_t SystemGetDeadmanTimestampSeconds() {
 	return deadmanTimestamp.Seconds;
+}
+
+PUBLIC void SystemSetMotorRPM(int32_t r) {
+	rpm = r;
+}
+PUBLIC int32_t SystemGetMotorRPM() {
+	return rpm;
 }

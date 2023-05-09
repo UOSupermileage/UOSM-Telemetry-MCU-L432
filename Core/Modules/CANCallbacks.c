@@ -61,3 +61,9 @@ void EventDataCallback(iCommsMessage_t* msg)
         DebugPrint("msg.dataLength does not match lookup table. %d != %d", msg->dataLength, CANMessageLookUpTable[ERROR_DATA_ID].numberOfBytes);
     }
 }
+
+void MotorRPMDataCallback(iCommsMessage_t* msg) {
+	int32_t rpm = readMsg(msg);
+	DebugPrint("CAN rpm received: %d", rpm);
+	SystemSetMotorRPM(rpm);
+}
