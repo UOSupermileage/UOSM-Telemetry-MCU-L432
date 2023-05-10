@@ -12,7 +12,7 @@ percentage_t throttle;
 speed_t speed;
 current_t current;
 int32_t rpm;
-voltage_t voltage;
+volatile voltage_t voltage;
 
 telemetry_status_t status;
 RTC_TimeTypeDef deadmanTimestamp;

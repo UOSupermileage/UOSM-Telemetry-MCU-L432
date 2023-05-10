@@ -8,7 +8,7 @@
  */
 
 #include "BatteryTask.h"
-#include "BatteryModule.h"
+#include "ADCDriver.h"
 
 #define STACK_SIZE 128 * 4
 #define BATTERY_TASK_PRIORITY (osPriority_t) osPriorityHigh1
@@ -36,6 +36,6 @@ PRIVATE void BatteryTask(void *argument) {
         osDelayUntil(cycleTick);
 
         DebugPrint("%s battery loop", BAT_TAG);
-        Battery_UpdateVoltage();
+        ADCBatteryPeriodicJob();
     }
 }
