@@ -16,7 +16,7 @@
 
 #define ICOMMS_STACK_SIZE 128*8
 #define INTERNAL_COMMS_TASK_PRIORITY (osPriority_t) osPriorityRealtime1
-#define TIMER_INTERNAL_COMMS_TASK 500UL
+#define TIMER_INTERNAL_COMMS_TASK 200UL
 
 const char ICT_TAG[] = "#ICT:";
 

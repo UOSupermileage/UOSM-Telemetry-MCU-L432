@@ -12,7 +12,7 @@
 
 #define STACK_SIZE 128 * 4
 #define BATTERY_TASK_PRIORITY (osPriority_t) osPriorityHigh1
-#define TIMER_BATTERY_TASK 200UL
+#define TIMER_BATTERY_TASK 50UL
 
 const char BAT_TAG[] = "#BAT:";
 
