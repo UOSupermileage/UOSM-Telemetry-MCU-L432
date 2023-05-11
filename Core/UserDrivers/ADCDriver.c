@@ -9,9 +9,7 @@
 
 extern ADC_HandleTypeDef hadc1;
 
-#define SCALE 60000 / 3128
-
-uint32_t adcResult[2] = {0, 0};
+uint16_t adcResult[2] = {0, 0};
 
 PUBLIC result_t ADCBatteryPeriodicJob()
 {

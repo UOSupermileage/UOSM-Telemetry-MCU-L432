@@ -59,6 +59,7 @@ PRIVATE void LoggerTask(void *argument)
 		HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
 
 		SerialLogln("%02d.%02d.%02d,%d,%d,%d,%d,%d,%d,%d,%d,%02d.%02d.%02d", sTime.Hours, sTime.Minutes ,sTime.Seconds, SystemGetThrottle(), SystemGetSpeed(), SystemGetMotorRPM(), SystemGetCurrent(), SystemGetBatteryVoltage(), SystemGetThrottleTooHigh(), SystemGetMotorInitializing(), SystemGetClockState(), SystemGetDeadmanTimestampHours(), SystemGetDeadmanTimestampMinutes(), SystemGetDeadmanTimestampSeconds());
+		DebugPrint("%02d.%02d.%02d,%d,%d,%d,%d,%d,%d,%d,%d,%02d.%02d.%02d", sTime.Hours, sTime.Minutes ,sTime.Seconds, SystemGetThrottle(), SystemGetSpeed(), SystemGetMotorRPM(), SystemGetCurrent(), SystemGetBatteryVoltage(), SystemGetThrottleTooHigh(), SystemGetMotorInitializing(), SystemGetClockState(), SystemGetDeadmanTimestampHours(), SystemGetDeadmanTimestampMinutes(), SystemGetDeadmanTimestampSeconds());
 	}
 
 }

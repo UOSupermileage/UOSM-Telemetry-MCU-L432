@@ -12,10 +12,12 @@
 
 #include "LoggerTask.h"
 #include "InternalCommsTask.h"
+#include "BatteryTask.h"
 
 void RunTaskManager( void )
 {
 	InitDataAggregator();
 	InitInternalCommsTask();
+	InitBatteryTask();
 	InitLoggerTask();
 }
