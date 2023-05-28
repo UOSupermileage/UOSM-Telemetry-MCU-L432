@@ -10,7 +10,6 @@ void ThrottleDataCallback(iCommsMessage_t* msg)
 	uint32_t throttle = readMsg(msg);
 	DebugPrint("CAN Throttle percentage received: %d", throttle);
 	SystemSetThrottle(throttle);
-
 }
 
 void ErrorDataCallback(iCommsMessage_t* msg)

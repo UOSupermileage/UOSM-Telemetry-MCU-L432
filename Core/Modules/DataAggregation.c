@@ -10,7 +10,9 @@ extern RTC_HandleTypeDef hrtc;
 
 percentage_t throttle;
 speed_t speed;
+
 current_t current;
+
 int32_t rpm;
 volatile voltage_t voltage;
 
@@ -86,6 +88,8 @@ PUBLIC int32_t SystemGetMotorRPM() {
 PUBLIC void SystemSetBatteryVoltage(voltage_t v) {
 	voltage = v;
 }
+
+// Multiply by 15, the scaling factor to real world voltage
 PUBLIC voltage_t SystemGetBatteryVoltage() {
-	return voltage;
+	return (voltage);
 }

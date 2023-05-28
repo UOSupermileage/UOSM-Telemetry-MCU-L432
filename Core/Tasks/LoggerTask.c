@@ -15,7 +15,7 @@
 #include "DataAggregation.h"
 
 #define STACK_SIZE 128*8
-#define LOGGER_TASK_PRIORITY (osPriority_t) osPriorityRealtime
+#define LOGGER_TASK_PRIORITY (osPriority_t) osPriorityHigh
 #define TIMER_LOGGER_TASK 100UL
 
 const char TAG[] = "#LGT:";
@@ -60,6 +60,8 @@ PRIVATE void LoggerTask(void *argument)
 
 		SerialLogln("%02d.%02d.%02d,%d,%d,%d,%d,%d,%d,%d,%d,%02d.%02d.%02d", sTime.Hours, sTime.Minutes ,sTime.Seconds, SystemGetThrottle(), SystemGetSpeed(), SystemGetMotorRPM(), SystemGetCurrent(), SystemGetBatteryVoltage(), SystemGetThrottleTooHigh(), SystemGetMotorInitializing(), SystemGetClockState(), SystemGetDeadmanTimestampHours(), SystemGetDeadmanTimestampMinutes(), SystemGetDeadmanTimestampSeconds());
 		DebugPrint("%02d.%02d.%02d,%d,%d,%d,%d,%d,%d,%d,%d,%02d.%02d.%02d", sTime.Hours, sTime.Minutes ,sTime.Seconds, SystemGetThrottle(), SystemGetSpeed(), SystemGetMotorRPM(), SystemGetCurrent(), SystemGetBatteryVoltage(), SystemGetThrottleTooHigh(), SystemGetMotorInitializing(), SystemGetClockState(), SystemGetDeadmanTimestampHours(), SystemGetDeadmanTimestampMinutes(), SystemGetDeadmanTimestampSeconds());
+
+//		SerialLogln("%d", SystemGetCurrent());
 	}
 
 }

@@ -32,7 +32,6 @@ const osThreadAttr_t InternalCommsTask_attributes = {
 
 PUBLIC void InitInternalCommsTask(void)
 {
-
 	InternalCommsTaskHandle = osThreadNew(InternalCommsTask, NULL, &InternalCommsTask_attributes);
 
 }
@@ -47,6 +46,7 @@ PRIVATE void InternalCommsTask(void *argument)
 		cycleTick += TIMER_INTERNAL_COMMS_TASK;
 		osDelayUntil(cycleTick);
 
+		DebugPrint("Checking for icomms");
 		IComms_PeriodicReceive();
 	}
 }
