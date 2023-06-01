@@ -16,7 +16,7 @@
 
 #define STACK_SIZE 128*8
 #define LOGGER_TASK_PRIORITY (osPriority_t) osPriorityHigh
-#define TIMER_LOGGER_TASK 100UL
+#define TIMER_LOGGER_TASK 50UL
 
 const char TAG[] = "#LGT:";
 

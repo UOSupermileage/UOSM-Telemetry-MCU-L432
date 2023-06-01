@@ -5,16 +5,14 @@
  *      Author: Jeremy Cpte
  */
 #include "DataAggregation.h"
+#include "ADCDriver.h"
 
 extern RTC_HandleTypeDef hrtc;
 
 percentage_t throttle;
 speed_t speed;
 
-current_t current;
-
 int32_t rpm;
-volatile voltage_t voltage;
 
 telemetry_status_t status;
 RTC_TimeTypeDef deadmanTimestamp;
@@ -37,11 +35,8 @@ PUBLIC speed_t SystemGetSpeed() {
 	return speed;
 }
 
-PUBLIC void SystemSetCurrent(current_t c) {
-	current = c;
-}
 PUBLIC current_t SystemGetCurrent() {
-	return current;
+	return ADCGetBatteryCurrent();
 }
 
 PUBLIC void SystemSetThrottleTooHigh(flag_status_t s){
@@ -85,11 +80,6 @@ PUBLIC int32_t SystemGetMotorRPM() {
 	return rpm;
 }
 
-PUBLIC void SystemSetBatteryVoltage(voltage_t v) {
-	voltage = v;
-}
-
-// Multiply by 15, the scaling factor to real world voltage
 PUBLIC voltage_t SystemGetBatteryVoltage() {
-	return (voltage);
+	return ADCGetBatteryVoltage();
 }

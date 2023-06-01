@@ -8,8 +8,9 @@
 #include "DataAggregation.h"
 
 extern ADC_HandleTypeDef hadc1;
+extern TIM_HandleTypeDef htim1;
 
-uint16_t adcResult[2] = {0, 0};
+volatile uint16_t adcResult[2] = {0, 0};
 
 PUBLIC result_t ADCBatteryPeriodicJob()
 {
@@ -23,12 +24,15 @@ PUBLIC result_t ADCBatteryPeriodicJob()
 		return RESULT_FAIL;
 	}
 
+	HAL_TIM_Base_Start(&htim1);
+
 	return RESULT_OK;
 }
 
-PRIVATE void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-    // Conversion Complete & DMA Transfer completed so The voltageADCResult Is Now Updated
-    SystemSetBatteryVoltage(adcResult[0]);
-    SystemSetCurrent(adcResult[1]);
+
+PUBLIC voltage_t ADCGetBatteryVoltage() {
+	return adcResult[0];
+}
+PUBLIC current_t ADCGetBatteryCurrent() {
+	return adcResult[1];
 }

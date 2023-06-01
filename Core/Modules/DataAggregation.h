@@ -28,7 +28,6 @@ PUBLIC percentage_t SystemGetThrottle();
 PUBLIC void SystemSetSpeed(speed_t speed);
 PUBLIC speed_t SystemGetSpeed();
 
-PUBLIC void SystemSetCurrent(current_t current);
 PUBLIC current_t SystemGetCurrent();
 
 PUBLIC void SystemSetThrottleTooHigh(flag_status_t state);
@@ -48,7 +47,6 @@ PUBLIC uint8_t SystemGetDeadmanTimestampSeconds();
 PUBLIC void SystemSetMotorRPM(int32_t rpm);
 PUBLIC int32_t SystemGetMotorRPM();
 
-PUBLIC void SystemSetBatteryVoltage(voltage_t voltage);
 PUBLIC voltage_t SystemGetBatteryVoltage();
 
 

@@ -12,7 +12,7 @@
 
 #define STACK_SIZE 128 * 4
 #define BATTERY_TASK_PRIORITY (osPriority_t) osPriorityHigh1
-#define TIMER_BATTERY_TASK 100UL
+#define TIMER_BATTERY_TASK 25UL
 
 const char BAT_TAG[] = "#BAT:";
 
@@ -26,7 +26,10 @@ const osThreadAttr_t BatteryTask_attributes = {
     .priority = BATTERY_TASK_PRIORITY,
 };
 
-PUBLIC void InitBatteryTask(void) { BatteryTaskHandle = osThreadNew(BatteryTask, NULL, &BatteryTask_attributes); }
+PUBLIC void InitBatteryTask(void) {
+	ADCBatteryPeriodicJob();
+//	BatteryTaskHandle = osThreadNew(BatteryTask, NULL, &BatteryTask_attributes);
+}
 PRIVATE void BatteryTask(void *argument) {
     uint32_t cycleTick = osKernelGetTickCount();
     DebugPrint("battery");

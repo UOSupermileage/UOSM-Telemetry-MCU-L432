@@ -12,5 +12,7 @@
 #include "ApplicationTypes.h"
 
 PUBLIC result_t ADCBatteryPeriodicJob();
+PUBLIC voltage_t ADCGetBatteryVoltage();
+PUBLIC current_t ADCGetBatteryCurrent();
 
 #endif /* USERDRIVERS_ADCDRIVER_H_ */
