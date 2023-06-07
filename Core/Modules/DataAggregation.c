@@ -83,3 +83,7 @@ PUBLIC int32_t SystemGetMotorRPM() {
 PUBLIC voltage_t SystemGetBatteryVoltage() {
 	return ADCGetBatteryVoltage();
 }
+
+PUBLIC flag_status_t SystemGetUndervoltage() {
+	return SystemGetBatteryVoltage() < 3500 ? Set : Clear;
+}

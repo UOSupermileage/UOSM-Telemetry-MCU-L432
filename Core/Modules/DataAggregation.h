@@ -48,6 +48,7 @@ PUBLIC void SystemSetMotorRPM(int32_t rpm);
 PUBLIC int32_t SystemGetMotorRPM();
 
 PUBLIC voltage_t SystemGetBatteryVoltage();
+PUBLIC flag_status_t SystemGetUndervoltage();
 
 
 #endif /* MODULES_DATAAGGREGATION_H_ */

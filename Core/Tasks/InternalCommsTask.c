@@ -6,10 +6,11 @@
  */
 
 
-//#include "CANMessageLookUpModule.h"
+#include "CANMessageLookUpModule.h"
 #include "InternalCommsTask.h"
 #include "InternalCommsModule.h"
 #include "SerialDebugDriver.h"
+#include "DataAggregation.h"
 
 // Function alias - replace with the driver api
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
@@ -17,6 +18,8 @@
 #define ICOMMS_STACK_SIZE 128*8
 #define INTERNAL_COMMS_TASK_PRIORITY (osPriority_t) osPriorityRealtime1
 #define TIMER_INTERNAL_COMMS_TASK 200UL
+
+#define UNDERVOLTAGE_BROADCAST_RATE 3
 
 const char ICT_TAG[] = "#ICT:";
 
@@ -40,6 +43,9 @@ PRIVATE void InternalCommsTask(void *argument)
 	uint32_t cycleTick = osKernelGetTickCount();
 	DebugPrint("icomms");
 
+	const ICommsMessageInfo* eventInfo = CANMessageLookUpGetInfo(EVENT_DATA_ID);
+	uint8_t undervoltageTxCounter = 0;
+
 	IComms_Init();
 	for(;;)
 	{
@@ -48,5 +54,14 @@ PRIVATE void InternalCommsTask(void *argument)
 
 		DebugPrint("Checking for icomms");
 		IComms_PeriodicReceive();
+
+		undervoltageTxCounter++;
+		if (undervoltageTxCounter == UNDERVOLTAGE_BROADCAST_RATE) {
+			DebugPrint("%s Sending Undervoltage!", ICT_TAG);
+			iCommsMessage_t undervoltageTxMsg = IComms_CreateEventMessage(eventInfo->messageID, UNDERVOLTAGE, SystemGetUndervoltage());
+			result_t r = IComms_Transmit(&undervoltageTxMsg);
+			DebugPrint("%s Sending Undervoltage! [Result = %d]", ICT_TAG, r);
+			undervoltageTxCounter = 0;
+		}
 	}
 }
