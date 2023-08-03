@@ -19,8 +19,8 @@
 #define INTERNAL_COMMS_TASK_PRIORITY (osPriority_t) osPriorityRealtime1
 #define TIMER_INTERNAL_COMMS_TASK 200UL
 
-//#define UNDERVOLTAGE_BROADCAST_RATE 3
-#define VOLTAGE_BROADCAST_RATE 5
+#define UNDERVOLTAGE_BROADCAST_RATE 3
+#define CURRENT_VOLTAGE_BROADCAST_RATE 5
 
 const char ICT_TAG[] = "#ICT:";
 
@@ -44,11 +44,11 @@ PRIVATE void InternalCommsTask(void *argument)
 	uint32_t cycleTick = osKernelGetTickCount();
 	DebugPrint("icomms");
 
-//	const ICommsMessageInfo* eventInfo = CANMessageLookUpGetInfo(EVENT_DATA_ID);
-//	uint8_t undervoltageTxCounter = 0;
+	const ICommsMessageInfo* eventInfo = CANMessageLookUpGetInfo(EVENT_DATA_ID);
+	uint8_t undervoltageTxCounter = 0;
 
-	const ICommsMessageInfo* voltageInfo = CANMessageLookUpGetInfo(VOLTAGE_DATA_ID);
-	uint8_t voltageTxCounter = 0;
+	const ICommsMessageInfo* voltageInfo = CANMessageLookUpGetInfo(CURRENT_VOLTAGE_DATA_ID);
+	uint8_t currentVoltageTxCounter = 0;
 
 	IComms_Init();
 	for(;;)
@@ -59,22 +59,22 @@ PRIVATE void InternalCommsTask(void *argument)
 		DebugPrint("Checking for icomms");
 		IComms_PeriodicReceive();
 
-//		undervoltageTxCounter++;
-//		if (undervoltageTxCounter == UNDERVOLTAGE_BROADCAST_RATE) {
-//			if (SystemGetUndervoltage()) {
-//				DebugPrint("%s Sending Undervoltage!", ICT_TAG);
-//			}
-//
-//			iCommsMessage_t undervoltageTxMsg = IComms_CreateEventMessage(eventInfo->messageID, UNDERVOLTAGE, SystemGetUndervoltage());
-//			result_t r = IComms_Transmit(&undervoltageTxMsg);
-//			undervoltageTxCounter = 0;
-//		}
+		undervoltageTxCounter++;
+		if (undervoltageTxCounter == UNDERVOLTAGE_BROADCAST_RATE) {
+			if (SystemGetUndervoltage()) {
+				DebugPrint("%s Sending Undervoltage!", ICT_TAG);
+			}
 
-		voltageTxCounter++;
-		if (voltageTxCounter == VOLTAGE_BROADCAST_RATE) {
-			iCommsMessage_t voltageTxMsg = IComms_CreatePercentageMessage(voltageInfo->messageID, SystemGetBatteryVoltage());
-			result_t r = IComms_Transmit(&voltageTxMsg);
-			voltageTxCounter = 0;
+			iCommsMessage_t undervoltageTxMsg = IComms_CreateEventMessage(eventInfo->messageID, UNDERVOLTAGE, SystemGetUndervoltage());
+			result_t r = IComms_Transmit(&undervoltageTxMsg);
+			undervoltageTxCounter = 0;
+		}
+
+                currentVoltageTxCounter++;
+		if (currentVoltageTxCounter == CURRENT_VOLTAGE_BROADCAST_RATE) {
+			iCommsMessage_t currentVoltageTxMsg = IComms_CreatePairUInt16BitMessage(voltageInfo->messageID, SystemGetCurrent(), SystemGetBatteryVoltage());
+			result_t r = IComms_Transmit(&currentVoltageTxMsg);
+                        currentVoltageTxCounter = 0;
 		}
 	}
 }
