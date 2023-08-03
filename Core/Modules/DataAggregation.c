@@ -84,6 +84,7 @@ PUBLIC voltage_t SystemGetBatteryVoltage() {
 	return ADCGetBatteryVoltage();
 }
 
+// 46V
 PUBLIC flag_status_t SystemGetUndervoltage() {
-	return SystemGetBatteryVoltage() < 3500 ? Set : Clear;
+	return SystemGetBatteryVoltage() < 3100 ? Set : Clear;
 }
