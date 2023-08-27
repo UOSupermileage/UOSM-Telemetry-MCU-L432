@@ -66,3 +66,5 @@ void MotorRPMDataCallback(iCommsMessage_t* msg) {
 	DebugPrint("CAN rpm received: %d", rpm);
 	SystemSetMotorRPM(rpm);
 }
+
+void CurrentVoltageDataCallback(iCommsMessage_t *msg) { DebugPrint("CurrentVoltageDataCallback not implemented! %d", msg->standardMessageID); }
