@@ -5,6 +5,8 @@
 
 #include "stm32l4xx_hal.h"
 
+#define STM
+
 #define DEBUG_UART              huart2
 
 #define EXT_SPI_CAN             hspi1
